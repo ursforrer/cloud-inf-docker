@@ -1,0 +1,30 @@
+version: "3"
+services:
+  web:
+    build: web/
+    ports:
+      - "8080:8080"
+    networks:
+      - cloud
+    environment:
+      - API_HOST=api:5000
+      - PORT=8080
+    depends_on:
+      - api
+  api:
+    build: api/
+    networks:
+      - cloud
+    environment:
+      - DB=postgres://docker:docker@db/dockerdb
+      - PORT=5000
+    depends_on:
+      - db
+  db:
+    build: db/
+    networks:
+      - cloud
+networks:
+  cloud:
+
+
